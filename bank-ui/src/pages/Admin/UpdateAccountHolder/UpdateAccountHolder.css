@@ -1,0 +1,19 @@
+.updAccHoldContainer{
+    background-color: #014beba4;
+    width: 60%;
+    color: white;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 20px;
+}
+
+.updateBtn{
+    background-color: white;
+    color: #008080cb;
+    border: none;
+}
+
+.updateBtn:hover{
+    background-color:white;
+    color: white;
+}

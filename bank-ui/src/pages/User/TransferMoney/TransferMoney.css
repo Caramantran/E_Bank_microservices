@@ -1,0 +1,17 @@
+.accContainer{
+    width: 90%;
+    background-color: #014beba4;
+    color: white;
+	border-radius: 20px;
+}
+
+#addBtn{
+	color: white;
+	background-color: #014beb;
+	border: 1px solid white;
+}
+
+#addBtn:hover{
+	color: #008080;
+	background-color: white;
+}

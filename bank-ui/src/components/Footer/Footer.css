@@ -1,0 +1,88 @@
+/* App.css */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    margin-bottom: 20px; /* Ajustez cette valeur pour ajouter l'espace souhaité */
+  }
+  
+  .footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+  }
+  
+  .footer .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .footer h5 {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    color: #343a40;
+  }
+  
+  .footer address,
+  .footer ul {
+    color: #6c757d;
+    line-height: 1.6;
+  }
+  
+  .footer ul {
+    padding: 0;
+    list-style: none;
+  }
+  
+  .footer ul li {
+    margin-bottom: 10px;
+  }
+  
+  .footer a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer .fab {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    color: #007bff;
+  }
+  
+  .footer .fab:hover {
+    color: #0056b3;
+  }
+  
+  /* Optionnel: Centrer le contenu sur les petits écrans */
+  @media (max-width: 576px) {
+    .footer .row {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .footer .col-md-4 {
+      margin-bottom: 20px;
+    }
+  }
+  

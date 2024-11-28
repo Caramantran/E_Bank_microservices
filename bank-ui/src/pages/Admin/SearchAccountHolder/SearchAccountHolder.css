@@ -1,0 +1,14 @@
+.table-bg{
+    background-color: #014beba4;
+}
+
+#searchBtn{
+	color: #008080;
+	background-color: white;
+	/* border: 1px solid white; */
+}
+
+#searchBtn:hover{
+	color: white;
+	background-color: #014beb;
+}
