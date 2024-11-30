@@ -1,0 +1,77 @@
+services:
+  user:
+    container_name: user
+    image: glwa/user
+    build: ./user-service
+    mem_limit: 512M
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery
+    ports:
+      - "8081:8081"
+  transaction:
+    container_name: transaction
+    image: glwa/transaction
+    build: ./transaction-service
+    mem_limit: 512M
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery
+    ports:
+      - "9066:9066"
+  customer:
+    container_name: customer
+    image: glwa/customer
+    build: ./customer-service
+    mem_limit: 512M
+    depends_on:
+      - discovery
+    ports:
+      - "9080:9080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+  account-service:
+    container_name: account
+    image: glwa/account
+    build: ./account-service
+    mem_limit: 1024m
+    ports:
+      - "9009:9009"
+    depends_on:
+      - discovery
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+  auth-service:
+    container_name: auth-service
+    image: glwa/auth-service
+    build: ./auth-service
+    mem_limit: 512M
+    ports:
+      - "9001:9001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+    depends_on:
+      - discovery
+  discovery:
+    container_name: discovery
+    image: glwa/discovery
+    build: ./discovery-service
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+    ports:
+      - "8761:8761"
+  edge:
+    container_name: edge
+    image: glwa/edge
+    build: ./edge-service
+    mem_limit: 512m
+    depends_on:
+      - auth-service
+      - discovery
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+    ports:
+      - "9999:9999"
