@@ -1,7 +1,7 @@
 services:
   user:
     container_name: user
-    image: glwa/user
+    image: froukabidock/user
     build: ./user-service
     mem_limit: 512M
     environment:
@@ -12,7 +12,7 @@ services:
       - "8081:8081"
   transaction:
     container_name: transaction
-    image: glwa/transaction
+    image: froukabidock/transaction
     build: ./transaction-service
     mem_limit: 512M
     environment:
@@ -23,7 +23,7 @@ services:
       - "9066:9066"
   customer:
     container_name: customer
-    image: glwa/customer
+    image: froukabidock/customer
     build: ./customer-service
     mem_limit: 512M
     depends_on:
@@ -34,7 +34,7 @@ services:
       - SPRING_PROFILES_ACTIVE=default
   account-service:
     container_name: account
-    image: glwa/account
+    image: froukabidock/account
     build: ./account-service
     mem_limit: 1024m
     ports:
@@ -45,7 +45,7 @@ services:
       - SPRING_PROFILES_ACTIVE=default
   auth-service:
     container_name: auth-service
-    image: glwa/auth-service
+    image: froukabidock/auth-service
     build: ./auth-service
     mem_limit: 512M
     ports:
@@ -56,7 +56,7 @@ services:
       - discovery
   discovery:
     container_name: discovery
-    image: glwa/discovery
+    image: froukabidock/discovery
     build: ./discovery-service
     mem_limit: 512m
     environment:
@@ -65,7 +65,7 @@ services:
       - "8761:8761"
   edge:
     container_name: edge
-    image: glwa/edge
+    image: froukabidock/edge
     build: ./edge-service
     mem_limit: 512m
     depends_on:
