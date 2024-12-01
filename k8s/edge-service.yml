@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-service-app
+  labels:
+    app: edge-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edge-service-app
+  template:
+    metadata:
+      labels:
+        app: edge-service-app
+    spec:
+      containers:
+        - name: edge-service-app
+          image: froukabidock/edge-service:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9999
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edge-service-svc
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 9999
+      protocol: TCP
+  selector:
+    app: cloud-gateway-app
