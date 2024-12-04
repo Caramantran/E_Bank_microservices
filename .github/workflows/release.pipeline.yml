@@ -31,7 +31,9 @@ jobs:
         run: |-
            gcloud auth configure-docker --quiet
            gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
-
+      - name: Give github actions permission to read build_and_push.sh
+        run: |-
+          chmod +x build_and_push.sh
       - name: Build and push "Discovery" Docker Image to Artifact Registry
         run: |-
           ./build_and_push.sh "discovery" ${{ secrets.PROJECT_ID }} "discovery-service"
