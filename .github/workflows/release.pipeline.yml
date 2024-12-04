@@ -22,32 +22,34 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - name: Log into registry docker.io
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
+      - uses: google-github-actions/setup-gcloud@master
         with:
-          registry: docker.io
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_SECRET_TOKEN }}
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          export_default_credentials: true
+      - name: Configure Docker Client
+        run: |-
+           gcloud auth configure-docker --quiet
+           gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
 
-      - name: Build and publish docker images
-        uses: 0x4r45h/docker-compose-ci@v0.1.0
-  Deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Log into registry docker.io
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
-        with:
-          registry: docker.io
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_SECRET_TOKEN }}
-      - name: kubectl - Google Cloud GKE cluster.
-        uses: ameydev/gke-kubectl-action@master
-        env:
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          APPLICATION_CREDENTIALS: ${{ secrets.GKE_SA_KEY }}
-          CLUSTER_NAME: ${{ secrets.GKE_CLUSTER }}
-          ZONE_NAME: ${{ secrets.GKE_ZONE }}
-        with:
-          args: apply -f k8s/
+      - name: Build and push "Discovery" Docker Image to Artifact Registry
+        run: |-
+          ./build_and_push.sh "discovery" ${{ secrets.PROJECT_ID }} "discovery-service"
+      - name: Build and push "Usergit" Docker Image to Artifact Registry
+        run: |-
+          ./build_and_push.sh "user" ${{ secrets.PROJECT_ID }} "user-service"
+      - name: Build and push "Customer" Docker Image to Artifact Registry
+        run: |-
+          ./build_and_push.sh "customer" ${{ secrets.PROJECT_ID }} "customer-service"
+      - name: Build and push "Transaction" Docker Image to Artifact Registry
+        run: |-
+          ./build_and_push.sh "transaction" ${{ secrets.PROJECT_ID }} "transaction-service"
+      - name: Build and push "Edge" Docker Image to Artifact Registry
+        run: |-
+          ./build_and_push.sh "edge" ${{ secrets.PROJECT_ID }} "edge-service"
+      - name: Build and push "Auth-Service" Docker Image to Artifact Registry
+        run: |-
+          ./build_and_push.sh "auth-service" ${{ secrets.PROJECT_ID }} "auth-service"
+      - name: Build and push "Account" Docker Image to Artifact Registry
+        run: |-
+          ./account.sh "account" ${{ secrets.PROJECT_ID }} "account-service"
