@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: transaction-service-app
-          image: froukabidock/transaction:1.0
+          image: europe-west1-docker.pkg.dev/ebank-428423/ebank-docker-repo/transaction:1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 9040

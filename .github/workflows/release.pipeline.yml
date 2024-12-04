@@ -22,11 +22,10 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - uses: google-github-actions/setup-gcloud@main
+      - uses: google-github-actions/auth@v2
         with:
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-          project_id: ${{ secrets.PROJECT_ID }}
-          export_default_credentials: true
+          credentials_json: ${{ secrets.CREDS_JSON }}
+      - uses: google-github-actions/setup-gcloud@main
       - name: Configure Docker Client
         run: |-
            gcloud auth configure-docker --quiet
@@ -54,4 +53,18 @@ jobs:
           ./build_and_push.sh "auth-service" ${{ secrets.PROJECT_ID }} "auth-service"
       - name: Build and push "Account" Docker Image to Artifact Registry
         run: |-
-          ./account.sh "account" ${{ secrets.PROJECT_ID }} "account-service"
+          ./build_and_push.sh "account" ${{ secrets.PROJECT_ID }} "account-service"
+  Deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: kubectl - Google Cloud GKE cluster.
+        uses: ameydev/gke-kubectl-action@master
+        env:
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          APPLICATION_CREDENTIALS: ${{ secrets.GKE_SA_KEY }}
+          CLUSTER_NAME: ${{ secrets.GKE_CLUSTER }}
+          ZONE_NAME: ${{ secrets.GKE_ZONE }}
+        with:
+          args: apply -f k8s/

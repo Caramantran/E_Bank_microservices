@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: customer-service-app
-          image: froukabidock/customer:1.0
+          image: europe-west1-docker.pkg.dev/ebank-428423/ebank-docker-repo/customer:1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 9080
