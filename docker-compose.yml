@@ -5,18 +5,18 @@ services:
     build: ./user-service
     mem_limit: 512M
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_PROFILES_ACTIVE=default
     depends_on:
       - discovery
     ports:
-      - "8081:8081"
+      - "9040:9040"
   transaction:
     container_name: transaction
     image: froukabidock/transaction
     build: ./transaction-service
     mem_limit: 512M
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_PROFILES_ACTIVE=default
     depends_on:
       - discovery
     ports:
